@@ -1,6 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { getProjects } from "@/lib/microcms";
 import {
   ShoppingCart,
   Receipt,
@@ -10,6 +13,8 @@ import {
   Coins,
   Search,
   ArrowRight,
+  Calendar,
+  Building2,
 } from "lucide-react";
 
 const steps = [
@@ -65,7 +70,11 @@ const faqs = [
   },
 ];
 
-export default function HomePage() {
+export const revalidate = 300;
+
+export default async function HomePage() {
+  const projects = await getProjects();
+  const openProjects = projects.filter((p) => p.status?.[0] === "open").slice(0, 3);
   return (
     <>
       {/* Hero */}
@@ -140,17 +149,71 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Projects CTA */}
+      {/* Projects preview */}
       <section className="bg-muted/40 py-20">
-        <div className="mx-auto max-w-6xl px-4 text-center">
-          <h2 className="text-3xl font-bold">募集中の案件</h2>
-          <p className="mt-2 text-muted-foreground">
-            今すぐ参加できるPR案件をチェック
-          </p>
-          <div className="mt-8">
-            <Button size="lg" asChild>
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mb-10 text-center">
+            <h2 className="text-3xl font-bold">募集中の案件</h2>
+            <p className="mt-2 text-muted-foreground">
+              今すぐ参加できるPR案件をチェック
+            </p>
+          </div>
+
+          {openProjects.length > 0 ? (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {openProjects.map((project) => (
+                <Link key={project.id} href={`/projects/${project.id}`}>
+                  <Card className="group h-full overflow-hidden border-0 shadow-sm transition-all hover:shadow-lg">
+                    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+                      {project.thumbnail?.url ? (
+                        <Image
+                          src={project.thumbnail.url}
+                          alt={project.title}
+                          fill
+                          className="object-cover transition-transform group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center text-muted-foreground">
+                          No Image
+                        </div>
+                      )}
+                      <Badge className="absolute right-3 top-3 bg-tagpo text-white hover:bg-tagpo-dark">
+                        募集中
+                      </Badge>
+                    </div>
+                    <CardContent className="p-5">
+                      <h3 className="line-clamp-2 font-bold leading-snug group-hover:text-tagpo">
+                        {project.title}
+                      </h3>
+                      <div className="mt-3 space-y-1.5 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1.5">
+                          <Building2 className="h-3.5 w-3.5" />
+                          <span className="line-clamp-1">{project.company}</span>
+                        </div>
+                        {project.deadline && (
+                          <div className="flex items-center gap-1.5">
+                            <Calendar className="h-3.5 w-3.5" />
+                            <span>
+                              募集期限: {new Date(project.deadline).toLocaleDateString("ja-JP")}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-muted-foreground">
+              現在募集中の案件はありません
+            </p>
+          )}
+
+          <div className="mt-8 text-center">
+            <Button size="lg" variant="outline" asChild>
               <Link href="/projects">
-                案件一覧を見る
+                すべての案件を見る
                 <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </Button>

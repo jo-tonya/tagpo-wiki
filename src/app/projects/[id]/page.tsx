@@ -12,7 +12,7 @@ import {
   AlertTriangle,
   Hash,
 } from "lucide-react";
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtml from "sanitize-html";
 import type { Metadata } from "next";
 
 type Props = { params: Promise<{ id: string }> };
@@ -137,7 +137,20 @@ export default async function ProjectDetailPage({ params }: Props) {
       {/* Body (microCMS リッチエディタ = HTML) */}
       <article
         className="prose prose-sm max-w-none sm:prose-base prose-headings:font-bold prose-h2:text-xl prose-h2:text-tagpo prose-h3:text-lg prose-a:text-tagpo prose-a:underline"
-        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project.body) }}
+        dangerouslySetInnerHTML={{
+          __html: sanitizeHtml(project.body ?? "", {
+            allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+              "img", "h1", "h2", "h3", "iframe", "figure", "figcaption",
+            ]),
+            allowedAttributes: {
+              ...sanitizeHtml.defaults.allowedAttributes,
+              img: ["src", "alt", "width", "height", "loading"],
+              a: ["href", "target", "rel"],
+              iframe: ["src", "width", "height", "frameborder", "allow", "allowfullscreen"],
+            },
+            allowedSchemes: ["http", "https", "mailto"],
+          })
+        }}
       />
 
       {/* CTA */}
