@@ -14,9 +14,9 @@ const snsLinks = [
 ];
 
 const legalLinks = [
-  { href: "#", label: "利用規約" },
-  { href: "#", label: "プライバシーポリシー" },
-  { href: "#", label: "源泉徴収について" },
+  { href: "/kiyaku", label: "利用規約" },
+  { href: "/privacy", label: "プライバシーポリシー" },
+  { href: "/gensen", label: "源泉徴収について" },
   { href: "https://tonyainc.jp/", label: "運営会社（株式会社TONYA）" },
 ];
 
