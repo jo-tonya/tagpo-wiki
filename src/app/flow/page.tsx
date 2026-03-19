@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Search,
@@ -83,8 +84,7 @@ const steps = [
     number: 6,
     icon: BarChart3,
     title: "再生数の計測",
-    description:
-      "動画投稿日の14日後に、動画の「再生、いいね、コメント、保存、共有」の数がわかる画面のスクリーンショットをLINEにてお送りください。",
+    description: "",
     link: null,
     details: [],
     warnings: [
@@ -150,9 +150,60 @@ export default function FlowPage() {
                     STEP {step.number}
                   </div>
                   <h2 className="mt-1 text-lg font-bold">{step.title}</h2>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {step.description}
-                  </p>
+                  {step.description && (
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {step.description}
+                    </p>
+                  )}
+
+                  {step.number === 6 && (
+                    <>
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                        <span className="font-bold text-red-500">動画投稿日の14日後</span>
+                        に、
+                        <span className="font-bold text-red-500">
+                          動画の「再生、いいね、コメント、保存、共有」+「フォロワー/非フォロワー比率、男女比率」の数がわかる画面のスクリーンショット
+                        </span>
+                        をLINEにてお送りください。
+                      </p>
+
+                      <div className="mt-4 space-y-4">
+                        <p className="text-xs font-semibold text-muted-foreground">
+                          送信するスクリーンショットの例:
+                        </p>
+
+                        <div className="overflow-hidden rounded-lg border">
+                          <Image
+                            src="/images/insight-tiktok-overview.png"
+                            alt="TikTok動画分析（概要）とInstagramインサイトのスクリーンショット例"
+                            width={800}
+                            height={400}
+                            className="w-full"
+                          />
+                        </div>
+
+                        <div className="overflow-hidden rounded-lg border">
+                          <Image
+                            src="/images/insight-instagram-detail.png"
+                            alt="Instagram閲覧数とオーディエンスのスクリーンショット例"
+                            width={800}
+                            height={400}
+                            className="w-full"
+                          />
+                        </div>
+
+                        <div className="overflow-hidden rounded-lg border">
+                          <Image
+                            src="/images/insight-tiktok-audience.png"
+                            alt="TikTok視聴者分析のスクリーンショット例"
+                            width={400}
+                            height={800}
+                            className="w-full"
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
 
                   {/* Details list */}
                   {step.details.length > 0 && (
