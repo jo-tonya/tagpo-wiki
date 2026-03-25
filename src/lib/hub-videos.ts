@@ -108,15 +108,23 @@ async function fetchOembedThumbnail(
       return "";
     }
 
+    console.log(`[oEmbed] Fetching thumbnail for ${videoType}: ${oembedUrl}`);
+
     const res = await fetch(oembedUrl, {
       next: { revalidate: 86400 }, // 24時間キャッシュ
     });
 
-    if (!res.ok) return "";
+    if (!res.ok) {
+      console.warn(`[oEmbed] Failed: ${res.status} ${res.statusText}`);
+      return "";
+    }
 
     const data = await res.json();
-    return data.thumbnail_url || "";
-  } catch {
+    const thumb = data.thumbnail_url || "";
+    console.log(`[oEmbed] Result for ${videoType}: ${thumb || "(empty)"}`);
+    return thumb;
+  } catch (error) {
+    console.error(`[oEmbed] Error for ${videoType}:`, error);
     return "";
   }
 }
