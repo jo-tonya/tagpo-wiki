@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP, Inter } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 
@@ -43,6 +44,10 @@ export default function RootLayout({
         <Header />
         <main className="min-h-[calc(100vh-160px)]">{children}</main>
         <Footer />
+        <Script
+          src="https://cdn.iframe.ly/embed.js"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );

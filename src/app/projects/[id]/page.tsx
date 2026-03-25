@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import sanitizeHtml from "sanitize-html";
 import type { Metadata } from "next";
+import { IframelyEmbed } from "@/components/iframely-embed";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -135,24 +136,32 @@ export default async function ProjectDetailPage({ params }: Props) {
       <Separator className="my-8" />
 
       {/* Body (microCMS リッチエディタ = HTML) */}
-      <article
-        className="prose prose-sm max-w-none sm:prose-base prose-headings:font-bold prose-h2:text-xl prose-h2:text-tagpo prose-h3:text-lg prose-a:text-tagpo prose-a:underline"
-        dangerouslySetInnerHTML={{
-          __html: sanitizeHtml(project.body ?? "", {
-            allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-              "img", "h1", "h2", "h3", "iframe", "figure", "figcaption", "video", "source",
-            ]),
-            allowedAttributes: {
-              ...sanitizeHtml.defaults.allowedAttributes,
-              img: ["src", "alt", "width", "height", "loading"],
-              a: ["href", "target", "rel"],
-              iframe: ["src", "width", "height", "frameborder", "allow", "allowfullscreen"],
-              video: ["src", "controls", "width", "height", "poster", "preload", "autoplay", "muted", "loop", "playsinline"],
-              source: ["src", "type"],
-            },
-            allowedSchemes: ["http", "https", "mailto"],
-          })
-        }}
+      <IframelyEmbed
+        html={sanitizeHtml(project.body ?? "", {
+          allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+            "img", "h1", "h2", "h3", "iframe", "figure", "figcaption", "video", "source",
+          ]),
+          allowedAttributes: {
+            ...sanitizeHtml.defaults.allowedAttributes,
+            img: ["src", "alt", "width", "height", "loading"],
+            a: ["href", "target", "rel"],
+            iframe: ["src", "width", "height", "frameborder", "allow", "allowfullscreen", "style"],
+            video: ["src", "controls", "width", "height", "poster", "preload", "autoplay", "muted", "loop", "playsinline"],
+            source: ["src", "type"],
+            div: ["class", "style", "data-iframely-url"],
+          },
+          allowedSchemes: ["http", "https", "mailto"],
+          allowedIframeHostnames: [
+            "www.youtube.com",
+            "www.youtube-nocookie.com",
+            "player.vimeo.com",
+            "www.tiktok.com",
+            "www.instagram.com",
+            "iframe.ly",
+            "drive.google.com",
+            "docs.google.com",
+          ],
+        })}
       />
 
       {/* CTA */}
