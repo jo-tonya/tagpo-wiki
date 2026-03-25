@@ -5,12 +5,13 @@ import Image from "next/image";
 import { useState } from "react";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 const navItems = [
   { href: "/flow", label: "投稿の流れ" },
   { href: "/rules", label: "投稿ルール" },
   { href: "/projects", label: "募集中の案件" },
+  { href: "/creator-hub", label: "クリエイターハブ" },
   { href: "/faq", label: "よくある質問" },
 ];
 
@@ -64,6 +65,7 @@ export function Header() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-72">
+            <SheetTitle className="sr-only">メニュー</SheetTitle>
             <nav className="mt-8 flex flex-col gap-2">
               {navItems.map((item) => (
                 <Link

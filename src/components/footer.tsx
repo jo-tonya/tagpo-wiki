@@ -5,6 +5,7 @@ const footerLinks = [
   { href: "/flow", label: "投稿の流れ" },
   { href: "/rules", label: "投稿ルール" },
   { href: "/projects", label: "募集中の案件" },
+  { href: "/creator-hub", label: "クリエイターハブ" },
   { href: "/faq", label: "よくある質問" },
 ];
 
