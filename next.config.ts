@@ -20,10 +20,6 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "**.tiktokcdn.com",
       },
-      {
-        protocol: "https",
-        hostname: "drive.google.com",
-      },
     ],
   },
   async headers() {

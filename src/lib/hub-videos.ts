@@ -87,48 +87,6 @@ function toDriveThumbnailUrl(url: string): string {
   return url;
 }
 
-// ── oEmbed サムネイル取得 ────────────────────────────────────────
-
-/**
- * oEmbed API を使って動画のサムネイルURLを取得。
- * TikTok: https://www.tiktok.com/oembed?url=VIDEO_URL
- * Instagram: noembed.com 経由で取得（公式はトークン必要のため）
- */
-async function fetchOembedThumbnail(
-  videoType: HubVideoType,
-  videoUrl: string
-): Promise<string> {
-  try {
-    let oembedUrl = "";
-    if (videoType === "tiktok") {
-      oembedUrl = `https://www.tiktok.com/oembed?url=${encodeURIComponent(videoUrl)}`;
-    } else if (videoType === "instagram") {
-      oembedUrl = `https://noembed.com/embed?url=${encodeURIComponent(videoUrl)}`;
-    } else {
-      return "";
-    }
-
-    console.log(`[oEmbed] Fetching thumbnail for ${videoType}: ${oembedUrl}`);
-
-    const res = await fetch(oembedUrl, {
-      next: { revalidate: 86400 }, // 24時間キャッシュ
-    });
-
-    if (!res.ok) {
-      console.warn(`[oEmbed] Failed: ${res.status} ${res.statusText}`);
-      return "";
-    }
-
-    const data = await res.json();
-    const thumb = data.thumbnail_url || "";
-    console.log(`[oEmbed] Result for ${videoType}: ${thumb || "(empty)"}`);
-    return thumb;
-  } catch (error) {
-    console.error(`[oEmbed] Error for ${videoType}:`, error);
-    return "";
-  }
-}
-
 // ── Data Fetcher ─────────────────────────────────────────────────
 
 const VALID_CATEGORIES: HubVideoCategory[] = [
@@ -208,18 +166,7 @@ export async function getHubVideos(): Promise<HubVideo[]> {
       })
       .filter((v): v is HubVideo => v !== null);
 
-    // oEmbed でサムネイル自動取得（thumbnail_url が空の instagram/tiktok のみ）
-    const videosWithThumbnails = await Promise.all(
-      videos.map(async (video) => {
-        if (!video.thumbnail_url && (video.video_type === "instagram" || video.video_type === "tiktok")) {
-          const thumb = await fetchOembedThumbnail(video.video_type, video.video_url);
-          return { ...video, thumbnail_url: thumb };
-        }
-        return video;
-      })
-    );
-
-    return videosWithThumbnails;
+    return videos;
   } catch (error) {
     console.error("Error fetching hub videos:", error);
     return [];
