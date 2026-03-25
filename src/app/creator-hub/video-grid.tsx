@@ -86,7 +86,7 @@ export function VideoGrid({ videos, showCategoryFilter = false }: Props) {
                 <img
                   src={video.thumbnail_url}
                   alt={video.title}
-                  className="absolute inset-0 h-full w-full object-cover"
+                  className="absolute -inset-px h-[calc(100%+2px)] w-[calc(100%+2px)] object-cover"
                 />
               ) : (
                 <div className="flex h-full items-center justify-center">
