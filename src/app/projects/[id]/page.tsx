@@ -140,13 +140,15 @@ export default async function ProjectDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{
           __html: sanitizeHtml(project.body ?? "", {
             allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-              "img", "h1", "h2", "h3", "iframe", "figure", "figcaption",
+              "img", "h1", "h2", "h3", "iframe", "figure", "figcaption", "video", "source",
             ]),
             allowedAttributes: {
               ...sanitizeHtml.defaults.allowedAttributes,
               img: ["src", "alt", "width", "height", "loading"],
               a: ["href", "target", "rel"],
               iframe: ["src", "width", "height", "frameborder", "allow", "allowfullscreen"],
+              video: ["src", "controls", "width", "height", "poster", "preload", "autoplay", "muted", "loop", "playsinline"],
+              source: ["src", "type"],
             },
             allowedSchemes: ["http", "https", "mailto"],
           })
