@@ -33,12 +33,12 @@ function getEmbedUrl(type: string, url: string): string | null {
 }
 
 /**
- * Googleドライブの共有URLを埋め込み用URLに変換
+ * GoogleドライブのURLを直接再生用URLに変換
  */
-function toGoogleDriveEmbedUrl(rawUrl: string): string | null {
+function toGoogleDriveDirectUrl(rawUrl: string): string | null {
   const match = rawUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
   if (match) {
-    return `https://drive.google.com/file/d/${match[1]}/preview`;
+    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
   }
   return null;
 }
@@ -89,23 +89,13 @@ export function VideoModal({ video, onClose }: Props) {
 
     // mp4
     if (videoType === "mp4") {
-      // Googleドライブの場合はiframeで表示
-      const driveEmbedUrl = toGoogleDriveEmbedUrl(url);
-      if (driveEmbedUrl) {
-        return (
-          <iframe
-            src={driveEmbedUrl}
-            className="mx-auto aspect-[9/16] w-full max-w-sm rounded-lg"
-            allow="autoplay"
-            allowFullScreen
-          />
-        );
-      }
+      // GoogleドライブのURLを直接再生用に変換
+      const directUrl = toGoogleDriveDirectUrl(url);
+      const videoSrc = directUrl || url;
 
-      // その他のmp4 URL は <video> タグ
       return (
         <video
-          src={url}
+          src={videoSrc}
           controls
           autoPlay
           playsInline
