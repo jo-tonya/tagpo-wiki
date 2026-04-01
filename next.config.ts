@@ -37,7 +37,7 @@ const nextConfig: NextConfig = {
               "img-src 'self' data: https://images.microcms-assets.io https://i.ytimg.com https://*.cdninstagram.com https://*.tiktokcdn.com https://drive.google.com https://*.googleusercontent.com https://*.usercontent.google.com",
               "connect-src 'self' https://*.microcms.io https://*.microcms-assets.io https://cdn.iframe.ly https://docs.google.com",
               "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.tiktok.com https://www.instagram.com https://iframe.ly https://drive.google.com https://docs.google.com",
-              "media-src 'self' https://images.microcms-assets.io https://*.googleusercontent.com",
+              "media-src 'self' https://images.microcms-assets.io https://*.googleusercontent.com https://drive.google.com https://*.usercontent.google.com",
             ].join("; "),
           },
           {
