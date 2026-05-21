@@ -9,6 +9,8 @@ import {
   XCircle,
   FileText,
   List,
+  Store,
+  ArrowRight,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -165,6 +167,28 @@ export default function RulesPage() {
               </Card>
             </div>
           ))}
+
+          {/* Shooting guide link */}
+          <div className="scroll-mt-24">
+            <Link href="/shooting-guide">
+              <Card className="border-0 shadow-sm transition-colors hover:bg-tagpo/5">
+                <CardContent className="flex items-center gap-4 p-6 sm:p-8">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-tagpo/10 text-tagpo">
+                    <Store className="h-5 w-5" />
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-lg font-bold">
+                      ウエルシアグループ・ツルハグループ 店内撮影ガイドライン
+                    </h2>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      店内撮影時の禁止事項・推奨事項と投稿時のクリエイティブルール
+                    </p>
+                  </div>
+                  <ArrowRight className="h-5 w-5 shrink-0 text-tagpo" />
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
         </div>
       </div>
     </section>
