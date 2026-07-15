@@ -83,8 +83,9 @@ const steps = [
   {
     number: 6,
     icon: BarChart3,
-    title: "再生数の計測",
-    description: "",
+    title: "再生数・リーチ数の計測",
+    description:
+      "投稿から2週間後に、動画の再生数・リーチ数を集計します。",
     link: null,
     details: [],
     warnings: [
@@ -96,10 +97,10 @@ const steps = [
     icon: Coins,
     title: "報酬を獲得",
     description:
-      "当月投稿動画の報酬を集計し、翌月末日に当社より報酬をお支払いいたします。",
+      "投稿から2週間後に集計した再生数・リーチ数をもとに報酬を確定し、集計した月の翌々月末日に当社より報酬をお支払いいたします。",
     link: null,
     details: [
-      "計測期間が翌月にまたがっている動画につきましては、翌月に集計し翌々月に報酬をお支払い",
+      "例：5月に集計した分は、翌々月の7月末日にお支払いします。",
     ],
     warnings: [],
   },
