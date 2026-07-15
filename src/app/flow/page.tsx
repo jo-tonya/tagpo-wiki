@@ -83,9 +83,9 @@ const steps = [
   {
     number: 6,
     icon: BarChart3,
-    title: "再生数・リーチ数の計測",
+    title: "再生数の計測",
     description:
-      "投稿から2週間後に、動画の再生数・リーチ数を集計します。",
+      "投稿から2週間後に、動画の再生数を集計します。",
     link: null,
     details: [],
     warnings: [
@@ -97,7 +97,7 @@ const steps = [
     icon: Coins,
     title: "報酬を獲得",
     description:
-      "投稿から2週間後に集計した再生数・リーチ数をもとに報酬を確定し、集計した月の翌々月末日に当社より報酬をお支払いいたします。",
+      "投稿から2週間後に集計した再生数をもとに報酬を確定し、集計した月の翌々月末日に当社より報酬をお支払いいたします。",
     link: null,
     details: [
       "例：5月に集計した分は、翌々月の7月末日にお支払いします。",
@@ -163,7 +163,7 @@ export default function FlowPage() {
                         <span className="font-bold text-red-500">動画投稿日の14日後</span>
                         に、
                         <span className="font-bold text-red-500">
-                          動画の「再生、いいね、コメント、保存、共有」+「フォロワー/非フォロワー比率、男女比率」の数がわかる画面のスクリーンショット
+                          動画の「再生、いいね、コメント、保存、共有、リーチ数」+「フォロワー/非フォロワー比率、男女比率」の数がわかる画面のスクリーンショット
                         </span>
                         をLINEにてお送りください。
                       </p>
